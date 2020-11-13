@@ -1,0 +1,24 @@
+var getname={
+  idToName: function(value){
+    return value.slice(0,5)=="found"?'失物招领'
+    :value.slice(0,5)=='study'?'相约学习'
+    :value.slice(0,5)=='play_'?'约个球'
+    :value.slice(0,5)=="secon"?'闲置交易'
+    :value.slice(0,5)=="postg"?'考研资讯'
+    :value.slice(0,5)=="paper"?'论文推荐'
+    :value.slice(0,5)=="code_"?'菜鸟编程'
+    :'竞赛信息';
+  },
+  isFound:function(a){
+    return a.slice(0,5)=="found"?1:0
+  },
+  isSale:function(b){
+    return b.slice(0,5)=="secon"?1:0
+  }
+}
+//导出对外暴露的属性
+module.exports = {
+  idToName:getname.idToName,
+  isFound:getname.isFound,
+  isSale:getname.isSale
+}

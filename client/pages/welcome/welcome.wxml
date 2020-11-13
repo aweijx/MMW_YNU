@@ -1,0 +1,4 @@
+<view class='bg'>
+  <image src='../../images/other/fengmian.png' class='full' mode="aspectFill"></image>
+  <view class="myButton" bindtap="next" style="display:{{isLoad==1?'':'none'}}">{{time}}   跳过</view>
+</view>

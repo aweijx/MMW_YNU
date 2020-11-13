@@ -1,0 +1,104 @@
+<!-- 组件模板 -->
+<!-- 引入.wxs文件 src为相对路径，module指定当前模块的名称 -->
+<wxs module="getname" src="./search.wxs"></wxs>
+<nav-bar navbar-data='{{nvabarData}}'></nav-bar>
+<view class='home-page' style='margin-top: {{height*2+20}}px'>
+  <button bindtap="showPicker">{{picker_data.length!=0?picker_data[0].name+'-'+picker_data[1].name+'-'+picker_data[2].name:'请选择搜索条件'}}</button>
+  <picker
+	isShowPicker="{{isShow}}"
+	bind:sure="sureCallBack"
+	bind:cancle="cancleCallBack"
+	scrollType="link"
+	listData="{{listData}}"
+	indicatorStyle="height:80px"
+	maskStyle=""
+	titleStyle=""
+	sureStyle="color:blue;font-size:16px;"
+	cancelStyle="color:red;font-size:16px;"
+	chooseItemTextStyle="color:green;"
+	pickerHeaderStyle="background:#eee;"
+	titleText="请选择查询类别"
+	cancelText="取消"
+	sureText="确定"></picker> 
+  <block wx:if="{{(picker_index[0]==0||picker_index[0]==3)&&picker_index[1]==1&&picker_index[2]==0}}">
+    <view class="bottom_item">
+      <view class="message_user">
+        <view class="phone_title">物品名称：</view>
+        <input class="phone" placeholder="请输入要查询的物品名称" bindinput='input_obj_name' maxlength="20"></input>
+      </view>
+    </view>
+  </block>
+  <block wx:if="{{(picker_index[0]==1||picker_index[0]==2||picker_index[0]==4||picker_index[0]==5||picker_index[0]==6||picker_index[0]==7)&&picker_index[1]==1&&picker_index[2]==0}}">
+    <view class="bottom_item">
+      <view class="message_user">
+        <view class="phone_title">subject：</view>
+        <input class="phone" placeholder="{{picker_index[0]==1?'请输入要查询的科目：':picker_index[0]==2?'请输入要查询的运动：':picker_index[0]==4?'请输入要查询的考研专业：':picker_index[0]==5?'请输入要查询的论文简要标题：':picker_index[0]==6?'请输入要查询的相关技术：':'请输入要查询的比赛名称：'}}" bindinput='input_subject' maxlength="20"></input>
+      </view>
+    </view>
+  </block>
+  <button bindtap="loadMessage">搜索</button>
+
+   <view class="main">
+   
+    <block wx:for="{{user_message}}" wx:key="index">
+      <view class="back" bindtap="to_message_detail" id="{{item.OBJECT_ID}}">
+        <view class="main_item">
+          <view class="user_message">
+            <view class="user_image">
+              <image src='../../images/other/{{item.NICK_NAME!="匿名者"&&(item.GENDER=="male"||item.GENDER=="1")?"man":(item.NICK_NAME=="匿名者"?"hidden":"women")}}.png' mode="widthFix" />
+            </view>
+            <view class="user_detail">
+              <view class="user_name">
+                <text>{{item.NICK_NAME}}</text>
+              </view>
+              <view class="user_flag">
+                <view class="flag_category">{{getname.idToName(item.OBJECT_ID)}}</view>
+                <view class="flag_sex">{{(item.GENDER=="male"||item.GENDER=="1")?"小哥哥":"小姐姐"}}</view>
+                <view class="flag_major">{{item.MAJOR}}</view>
+                <view class="flag_age">{{item.GRADE}}级</view>
+                <block wx:if="{{getname.isFound(item.OBJECT_ID)}}"> 
+                <view class="flag_status">{{item.OBJECT_STATUS=="没找到"?"未找到":"已找到"}}</view>
+                </block>
+                <block wx:if="{{getname.isSale(item.OBJECT_ID)}}"> 
+                <view class="flag_status">{{item.OBJECT_STATUS=="没卖"?"在售":"已卖出"}}</view>
+                </block>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="main_middle">
+          <view class="main_middle_intro">
+            <text>{{item.MSG}}</text>
+          </view>
+          <block wx:if="{{getname.isEmpty(item.IMG_URL)}}">
+            <view class="main_middle_image {{getname.getimglist(item.IMG_URL).length==1?'change_one':getname.getimglist(item.IMG_URL).length==2?'change_second':''}}">
+              <block wx:for="{{getname.getimglist(item.IMG_URL)}}" wx:for-item="img" wx:key="image_index">
+                <image src="{{imageUrl}}{{img}}" mode="aspectFill" />
+              </block>
+            </view>
+          </block>
+        </view>
+        <view class="main_bottom">
+          <view class="main_bottom_operation">
+            <view class="main_bottom_operation_left">
+              <view>
+                <text class="iconfont icon-zhuanfa" style="margin-left:20rpx;color:#999;font-size:25rpx;">{{item.FORWARD_CNT}}</text>
+                <text class="iconfont icon-iconfontpinglun" style="margin-left:50rpx;color:#999;font-size:25rpx;">{{item.MSG_CNT}}</text>
+              </view>
+            </view>
+            <view class="main_bottom_operation_right">
+              <text class="iconfont icon-dianzan" style="margin-right:20rpx;color:#999;font-size:25rpx;">{{item.SEEN_CNT}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+ 
+  <view class="end" style="text-align:center;color:#999;font-size:25rpx;margin:10rpx;margin-top:20rpx;display:{{isLastPage?'':'none'}}">
+    ————————— End —————————
+  </view>
+  <view class="end" style="text-align:center;color:#999;font-size:25rpx;margin:10rpx;margin-top:20rpx;display:{{user_message.length==0?'':'none'}}">
+    ————————— End —————————
+  </view>
+</view>

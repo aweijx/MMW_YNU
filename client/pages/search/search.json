@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "nav-bar": "/components/navbar/index",
+    "picker": "/components/picker/picker"
+  }
+}
