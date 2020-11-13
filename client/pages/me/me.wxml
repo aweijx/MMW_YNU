@@ -84,7 +84,7 @@
       <text style="margin-left:10rpx;">权限检测</text>
     </view>
   </view>
-  <view style="text-align:center;color:#999;padding:20rpx;font-size:28rpx;">Ver 1.0.8</view>
+  <view style="text-align:center;color:#999;padding:20rpx;font-size:28rpx;">Ver 1.0.0</view>
 
   <view class="zan-dialog {{ showDialog1 ? 'zan-dialog--show' : '' }}">
     <view class="zan-dialog__mask" />
